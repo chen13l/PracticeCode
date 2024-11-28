@@ -1,0 +1,12 @@
+﻿################################################################################
+# 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
+################################################################################
+
+/.vs
+/DesignPattern/.idea/.idea.DesignPattern.dir/.idea
+/DesignPattern/.vs/DesignPattern/v17
+/DesignPattern/Binaries/Win64
+/DesignPattern/Intermediate
+*.vsconfig
+*.sln
+/DesignPattern/Saved
