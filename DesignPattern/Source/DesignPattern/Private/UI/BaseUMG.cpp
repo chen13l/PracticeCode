@@ -22,3 +22,50 @@ void UBaseUMG::SendMsg(UBaseMsg* Msg)
 	//TODO:ExecuteMsg
 	UBaseFacade::GetMsgBaseManager(this)->ExecuteMsg(Msg);
 }
+
+void UBaseUMG::OnCreateUMG(int Index)
+{
+	UMGIndex = Index;
+	OnBindLocalEvent();
+	OnCreate();
+}
+
+void UBaseUMG::OnShowUMG()
+{
+	OnShow();
+}
+
+void UBaseUMG::OnHideUMG()
+{
+	OnHide();
+}
+
+void UBaseUMG::OnDestroyUMG()
+{
+	OnUnBindLocalEvent();
+	OnDestroy();
+}
+
+void UBaseUMG::OnBindLocalEvent()
+{
+}
+
+void UBaseUMG::OnUnBindLocalEvent()
+{
+}
+
+void UBaseUMG::OnCreate_Implementation()
+{
+}
+
+void UBaseUMG::OnShow_Implementation()
+{
+}
+
+void UBaseUMG::OnHide_Implementation()
+{
+}
+
+void UBaseUMG::OnDestroy_Implementation()
+{
+}

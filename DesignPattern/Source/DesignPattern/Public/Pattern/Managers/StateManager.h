@@ -13,7 +13,7 @@
  */
 DECLARE_LOG_CATEGORY_CLASS(StateManagerLog, All, All);
 
-UCLASS()
+UCLASS(BlueprintType)
 class DESIGNPATTERN_API UStateManager : public UDataBaseManager
 {
 	GENERATED_BODY()
