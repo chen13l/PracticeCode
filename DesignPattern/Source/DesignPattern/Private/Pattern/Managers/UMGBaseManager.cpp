@@ -3,6 +3,8 @@
 
 #include "DesignPattern/Public/Pattern/Managers/UMGBaseManager.h"
 
+#include "Pattern/FacadePattern/BaseFacade.h"
+#include "Pattern/Managers/PoolBaseManager.h"
 #include "UI/BaseUMG.h"
 
 UUMGBaseManager::UUMGBaseManager()
@@ -41,12 +43,14 @@ UBaseUMG* UUMGBaseManager::GetUMG(TSubclassOf<UBaseUMG> UMGClass, int UMGIndex, 
 	return OutUMG;
 }
 
-UBaseUMG* UUMGBaseManager::CreateUMG(TSubclassOf<UBaseUMG> UMGClass)
+UBaseUMG* UUMGBaseManager::CreateUMG(TSubclassOf<UBaseUMG> UMGClass, bool FromPool)
 {
 	const FString UMGName = UMGClass.Get()->GetName();
 
 	//创建UMG
-	UBaseUMG* NewUMG = CreateWidget<UBaseUMG>(GetWorld(), UMGClass);
+	UBaseUMG* NewUMG = nullptr;
+	if (FromPool) { NewUMG = UBaseFacade::GetPoolBaseManager(this)->SpawnUMG(UMGClass); }
+	else { NewUMG = CreateWidget<UBaseUMG>(GetWorld(), UMGClass); }
 
 	if (NewUMG == nullptr) { return nullptr; }
 	// 在UMGIndex中设置Count
@@ -78,7 +82,7 @@ UBaseUMG* UUMGBaseManager::ShowUMGByClass(TSubclassOf<UBaseUMG> UMGClass, int UM
 	UBaseUMG* UMG = GetUMG(UMGClass, UMGIndex, false);
 	if (UMG == nullptr)
 	{
-		if (AutoCreate) { UMG = CreateUMG(UMGClass); }
+		if (AutoCreate) { UMG = CreateUMG(UMGClass, true); }
 		else { return nullptr; }
 	}
 	if (!UMG->IsInViewport()) { UMG->AddToViewport(ZOrder); }
@@ -121,7 +125,7 @@ void UUMGBaseManager::HideAllUMG()
 {
 	for (auto& [UMGClassName,UMGsArrStruct] : Str_UMGMap)
 	{
-		for(auto& UMG : UMGsArrStruct.UMGs)
+		for (auto& UMG : UMGsArrStruct.UMGs)
 		{
 			HideUMG(UMG);
 		}
@@ -146,9 +150,10 @@ bool UUMGBaseManager::DestroyUMG(UBaseUMG* UMG)
 		Str_UMGMap[UMGClassName].UMGs.Remove(UMG);
 		if (Str_UMGMap[UMGClassName].UMGs.Num() <= 0) { Str_UMGMap.Remove(UMGClassName); }
 
-		UMG->BeginDestroy();
+		if (UMG->IsFromPool()) { UBaseFacade::GetPoolBaseManager(this)->UnSpawnUMG(UMG); }
+		else { UMG->BeginDestroy(); }
 	}
-	
+
 	return true;
 }
 
@@ -157,7 +162,7 @@ void UUMGBaseManager::DestroyAllUMG()
 	HideAllUMG();
 	for (auto& [UMGClassName,UMGsArrStruct] : Str_UMGMap)
 	{
-		for(auto& UMG : UMGsArrStruct.UMGs)
+		for (auto& UMG : UMGsArrStruct.UMGs)
 		{
 			UMG->OnDestroyUMG();
 			UMG->BeginDestroy();

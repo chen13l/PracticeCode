@@ -23,8 +23,9 @@ void UBaseUMG::SendMsg(UBaseMsg* Msg)
 	UBaseFacade::GetMsgBaseManager(this)->ExecuteMsg(Msg);
 }
 
-void UBaseUMG::OnCreateUMG(int Index)
+void UBaseUMG::OnCreateUMG(int Index, bool FromPool)
 {
+	bFromPool = FromPool;
 	UMGIndex = Index;
 	OnBindLocalEvent();
 	OnCreate();

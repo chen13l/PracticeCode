@@ -40,7 +40,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category="UMGBaseManager")
 	UBaseUMG* GetUMG(TSubclassOf<UBaseUMG> UMGClass, int UMGIndex = -1, bool CanLast = true);
 	UFUNCTION(BlueprintCallable, Category="UMGBaseManager")
-	UBaseUMG* CreateUMG(TSubclassOf<UBaseUMG> UMGClass);
+	UBaseUMG* CreateUMG(TSubclassOf<UBaseUMG> UMGClass, bool FromPool = true);
 	UFUNCTION(BlueprintCallable, Category="UMGBaseManager")
 	UBaseUMG* ShowUMGByClass(TSubclassOf<UBaseUMG> UMGClass, int UMGIndex = -1, int ZOrder = 0, bool AutoCreate = true);
 	UFUNCTION(BlueprintCallable, Category="UMGBaseManager")

@@ -18,7 +18,12 @@ class DESIGNPATTERN_API UBaseUMG : public UUserWidget
 protected:
 	virtual void NativeConstruct() override;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="BaseUMG")
+	bool bFromPool = false;
+
 public:
+	FORCEINLINE bool IsFromPool() const { return bFromPool; }
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="BaseUMG")
 	int UMGIndex = 0;
 
@@ -29,7 +34,7 @@ public:
 	void SendMsg(UBaseMsg* Msg);
 
 	//framework
-	void OnCreateUMG(int Index = 0);
+	void OnCreateUMG(int Index = 0, bool FromPool = false);
 	void OnShowUMG();
 	void OnHideUMG();
 	void OnDestroyUMG();
