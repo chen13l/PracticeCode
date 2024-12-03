@@ -3,10 +3,10 @@
 ################################################################################
 
 /.vs
-/DesignPattern/.idea/.idea.DesignPattern.dir/.idea
-/DesignPattern/.vs/DesignPattern/v17
-/DesignPattern/Binaries/Win64
-/DesignPattern/Intermediate
+*/.idea
+*/.vs
+*/Binaries
+*/Intermediate
+*/Saved
 *.vsconfig
 *.sln
-/DesignPattern/Saved
