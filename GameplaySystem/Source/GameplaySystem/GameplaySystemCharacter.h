@@ -7,6 +7,7 @@
 #include "InputActionValue.h"
 #include "GameplaySystemCharacter.generated.h"
 
+class UInventoryComp;
 class UInputComponent;
 class USkeletalMeshComponent;
 class USceneComponent;
@@ -18,7 +19,22 @@ UCLASS(config=Game)
 class AGameplaySystemCharacter : public ACharacter
 {
 	GENERATED_BODY()
+public:
+	AGameplaySystemCharacter();
 
+	virtual void OnRep_PlayerState() override;
+	virtual void PossessedBy(AController* NewController) override;
+
+protected:
+	virtual void BeginPlay();
+
+	UPROPERTY()
+	TObjectPtr<UInventoryComp> InventoryComp;
+
+private:
+	void InitInventory();
+
+private:
 	/** Pawn mesh: 1st person view (arms; seen only by self) */
 	UPROPERTY(VisibleDefaultsOnly, Category=Mesh)
 	USkeletalMeshComponent* Mesh1P;
@@ -39,15 +55,7 @@ class AGameplaySystemCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	class UInputAction* MoveAction;
 
-	
 public:
-	AGameplaySystemCharacter();
-
-protected:
-	virtual void BeginPlay();
-
-public:
-		
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
@@ -81,7 +89,4 @@ public:
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
-
-
 };
-
