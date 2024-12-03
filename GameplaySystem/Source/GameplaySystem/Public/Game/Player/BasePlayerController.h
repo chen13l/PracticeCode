@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "BasePlayerController.generated.h"
 
+class UInputMappingContext;
+class UInputAction;
 /**
  * 
  */
@@ -16,5 +18,16 @@ class GAMEPLAYSYSTEM_API ABasePlayerController : public APlayerController
 
 protected:
 	ABasePlayerController();
-	
+
+	virtual void BeginPlay() override;
+
+	// Input
+	virtual void Pick();
+
+	UPROPERTY(EditAnywhere, Category="Input")
+	TObjectPtr<UInputAction> TestAction;
+	UPROPERTY(EditAnywhere, Category="Input")
+	TObjectPtr<UInputMappingContext> MappingContext;
+
+	// ~End Input
 };

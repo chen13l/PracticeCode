@@ -14,7 +14,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="SlotStruct")
 	FName ItemID = FName();
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="SlotStruct")
-	int32 Quality = 0;
+	int32 Nums = 0;
 };
 
 USTRUCT(BlueprintType)
