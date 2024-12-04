@@ -23,6 +23,8 @@ protected:
 
 	// Input
 	virtual void Pick();
+	UFUNCTION(Server,Reliable)
+	void ServerPick();
 
 	UPROPERTY(EditAnywhere, Category="Input")
 	TObjectPtr<UInputAction> TestAction;

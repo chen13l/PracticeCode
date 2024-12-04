@@ -26,9 +26,9 @@ public:
 	virtual void PossessedBy(AController* NewController) override;
 
 protected:
-	virtual void BeginPlay();
+	virtual void BeginPlay() override;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, Category="Inventory")
 	TObjectPtr<UInventoryComp> InventoryComp;
 
 private:

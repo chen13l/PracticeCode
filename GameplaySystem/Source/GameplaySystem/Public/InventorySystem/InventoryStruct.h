@@ -5,18 +5,20 @@
 #include "Items/BaseItem.h"
 #include "InventoryStruct.generated.h"
 
-USTRUCT(BlueprintType)
+// for inventory 
+USTRUCT(BlueprintType, Blueprintable)
 struct FSlotStruct : public FTableRowBase
 {
 	GENERATED_BODY()
 
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="SlotStruct")
-	FName ItemID = FName();
+	FName ItemName;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="SlotStruct")
 	int32 Nums = 0;
 };
 
+// for Item
 USTRUCT(BlueprintType)
 struct FItemStruct : public FTableRowBase
 {

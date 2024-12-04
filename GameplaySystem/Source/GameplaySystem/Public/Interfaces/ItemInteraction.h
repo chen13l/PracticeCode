@@ -23,4 +23,6 @@ class GAMEPLAYSYSTEM_API IItemInteraction
 public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void Picked();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	FName GetItemName();
 };

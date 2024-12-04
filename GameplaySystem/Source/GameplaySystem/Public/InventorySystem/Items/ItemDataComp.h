@@ -15,6 +15,10 @@ class GAMEPLAYSYSTEM_API UItemDataComp : public UActorComponent
 public:
 	UItemDataComp();
 
+	// Data
+	FName GetItemName() const;
+	// ~Data
+	
 protected:
 	virtual void BeginPlay() override;
 	

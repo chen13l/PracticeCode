@@ -29,13 +29,17 @@ void ABasePlayerController::BeginPlay()
 
 void ABasePlayerController::Pick()
 {
+	if (IsLocalController())
+	{
+		ServerPick();
+	}
+}
+
+void ABasePlayerController::ServerPick_Implementation()
+{
 	ABasePlayerState* BasePlayerState = GetPlayerState<ABasePlayerState>();
 	if (BasePlayerState && BasePlayerState->GetInventoryComp())
 	{
-		AActor* Item = BasePlayerState->GetInventoryComp()->InteractiveTrace();
-		if (Item && Item->Implements<UItemInteraction>())
-		{
-			IItemInteraction::Execute_Picked(Item);
-		}
+		BasePlayerState->GetInventoryComp()->Pick();
 	}
 }

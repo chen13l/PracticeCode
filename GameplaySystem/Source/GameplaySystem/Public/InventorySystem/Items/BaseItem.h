@@ -22,6 +22,7 @@ protected:
 
 	// IItemInteraction
 	virtual void Picked_Implementation() override;
+	virtual FName GetItemName_Implementation() override;
 	// ~IItemInteraction
 
 	UPROPERTY(VisibleAnywhere, Category="Interactable Item")

@@ -7,9 +7,10 @@
 ABaseItem::ABaseItem()
 {
 	PrimaryActorTick.bCanEverTick = false;
+	bReplicates = true;
 
 	ItemDataComp = CreateDefaultSubobject<UItemDataComp>(TEXT("ItemDataComp"));
-	
+
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(GetRootComponent());
 }
@@ -17,13 +18,20 @@ ABaseItem::ABaseItem()
 void ABaseItem::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 void ABaseItem::Picked_Implementation()
 {
 	IItemInteraction::Picked_Implementation();
+	if (HasAuthority())
+	{
+		Destroy();
+	}
+}
 
-	Destroy();
+FName ABaseItem::GetItemName_Implementation()
+{
+	if(ItemDataComp == nullptr) {return FName();}
+	return ItemDataComp->GetItemName();
 }
 

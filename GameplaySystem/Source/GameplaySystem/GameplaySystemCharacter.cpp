@@ -7,6 +7,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Game/Player/BasePlayerState.h"
+#include "InventorySystem/InventoryComp.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -41,6 +42,8 @@ void AGameplaySystemCharacter::InitInventory()
 	ABasePlayerState* BasePS = GetPlayerState<ABasePlayerState>();
 	check(BasePS);
 	InventoryComp = BasePS->GetInventoryComp();
+	BasePS->GetInventoryComp()->SetOwnPlayerCharacter(this);
+	BasePS->GetInventoryComp()->SetOwnPlayerState(BasePS);
 }
 
 void AGameplaySystemCharacter::OnRep_PlayerState()
