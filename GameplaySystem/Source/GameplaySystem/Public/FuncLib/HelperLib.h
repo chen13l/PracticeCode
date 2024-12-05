@@ -4,8 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "Helper.generated.h"
+#include "HelperLib.generated.h"
 
+class UDataTable;
 /**
  * 
  */
@@ -13,5 +14,8 @@ UCLASS()
 class GAMEPLAYSYSTEM_API UHelperLib : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
-	
+
+public:
+	UFUNCTION(BlueprintCallable,Category="Inventory|Data",meta=(DefaultToSelf="WorldContextObject"))
+	static UDataTable* GetItemDataTable(const UObject* WorldContextObject);
 };
