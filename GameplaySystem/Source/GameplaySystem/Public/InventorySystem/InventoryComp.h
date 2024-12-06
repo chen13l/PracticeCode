@@ -9,6 +9,8 @@
 #include "InventoryComp.generated.h"
 
 
+class USlotViewModel;
+class UInventoryViewModel;
 class ABasePlayerState;
 class AGameplaySystemCharacter;
 
@@ -44,16 +46,27 @@ public:
 	FORCEINLINE void SetOwnPlayerCharacter(AGameplaySystemCharacter* InCharacter) { OwnCharacter = InCharacter; }
 	// ~End private properties
 
+	// ViewModel
+	FORCEINLINE UInventoryViewModel* GetInventoryVM()const{return InventoryViewModel;}
+	// ~End ViewModel
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	const TArray<FSlotStruct>& GetContent() { return Content; }
 
 protected:
 	virtual void BeginPlay() override;
 
+	// ViewModel
+	UPROPERTY(EditDefaultsOnly, Category="ViewModel")
+	TSubclassOf<UInventoryViewModel> InventoryViewModelClass;
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<UInventoryViewModel> InventoryViewModel;
+	// ~End ViewModel
+	
 	// Data
 	UPROPERTY(Replicated)
 	TArray<FSlotStruct> Content;
-	UPROPERTY(EditDefaultsOnly, Category="InventoryComp")
+	UPROPERTY(VisibleAnywhere, Category="InventoryComp")
 	TObjectPtr<UDataTable> ItemDataTable;
 
 

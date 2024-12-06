@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameplaySystem/GameplaySystem.h"
 #include "GameplaySystem/GameplaySystemCharacter.h"
+#include "InventorySystem/UI/ViewModels/InventoryViewModel.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Net/UnrealNetwork.h"
 
@@ -31,6 +32,9 @@ void UInventoryComp::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 void UInventoryComp::BeginPlay()
 {
 	Super::BeginPlay();
+
+	InventoryViewModel = NewObject<UInventoryViewModel>(this, InventoryViewModelClass);
+	InventoryViewModel->SetInventorySize(GetInventorySize());
 }
 
 void UInventoryComp::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -90,6 +94,11 @@ void UInventoryComp::AddToInventory(int32 Quantity, const FName& ItemName)
 		}
 	}
 
+	if (ItemDataTable == nullptr)
+	{
+		UKismetSystemLibrary::PrintString(this, "ItemDataTable hasn't set");
+		return;
+	}
 	const FItemStruct* ItemStruct = ItemDataTable->FindRow<FItemStruct>(ItemName, *ItemName.ToString(), false);
 	check(ItemStruct);
 	const int32 ItemMaxStack = ItemStruct->StackSize;

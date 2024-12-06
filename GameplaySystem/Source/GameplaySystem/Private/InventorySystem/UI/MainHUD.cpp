@@ -2,10 +2,19 @@
 
 
 #include "InventorySystem/UI/MainHUD.h"
+#include "InventorySystem/UI/BaseInventoryWidget.h"
+
+#include "Blueprint/UserWidget.h"
 
 void AMainHUD::BeginPlay()
 {
 	Super::BeginPlay();
 
-	
+	if (InventoryWidgetClass)
+	{
+		InventoryWidget = CreateWidget<UBaseInventoryWidget>(GetOwningPlayerController(), InventoryWidgetClass);
+		InventoryWidget->InitWidget();
+		InventoryWidget->AddToViewport();
+		InventoryWidget->SetVisibility(ESlateVisibility::Hidden);
+	}
 }

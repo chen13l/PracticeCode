@@ -9,7 +9,6 @@ ABasePlayerState::ABasePlayerState()
 {
 	InventoryComp = CreateDefaultSubobject<UInventoryComp>(TEXT("InventorySystemComp"));
 	InventoryComp->SetIsReplicated(true);
-	InventoryComp->InitInventoryComp();
 
 	NetUpdateFrequency = 100.f;
 }

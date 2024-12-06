@@ -15,7 +15,7 @@ int32 USlotViewModel::GetQuantity() const
 
 float USlotViewModel::GetOpacity() const
 {
-	if(GetQuantity() <= 0)
+	if (GetQuantity() <= 0)
 	{
 		return 0;
 	}
@@ -24,6 +24,11 @@ float USlotViewModel::GetOpacity() const
 
 void USlotViewModel::SetItemData(const FItemStruct& NewData)
 {
+	if (NewData.ItemName.IsNone())
+	{
+		SetQuantity(0);
+		return;
+	}
 	ItemData = NewData;
 	ItemChangeDelegate.Broadcast(ItemData);
 	SetQuantity(0);
